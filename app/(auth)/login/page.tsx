@@ -26,12 +26,13 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     const supabase = getBrowserSupabaseClient();
+    const encodedNext = encodeURIComponent(nextPath);
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         emailRedirectTo:
           typeof window !== "undefined"
-            ? `${window.location.origin}/auth/callback?next=%2Fdashboard`
+            ? `${window.location.origin}/auth/callback?next=${encodedNext}`
             : undefined,
       },
     });
@@ -51,11 +52,12 @@ export default function LoginPage() {
     const supabase = getBrowserSupabaseClient();
     setLoading(true);
     if (isSignup) {
+      const encodedNext = encodeURIComponent(nextPath);
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=%2Fdashboard`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodedNext}`,
         },
       });
       if (error) setError(error.message);
