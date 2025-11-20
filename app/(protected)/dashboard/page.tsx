@@ -814,14 +814,14 @@ export default function DashboardPage() {
                 ].map((reply) => (
                   <button
                     key={reply}
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      sendQuickReply(showConversationModal, reply);
+                      await sendQuickReply(showConversationModal, reply);
                     }}
                     disabled={sendingMessage === showConversationModal}
                     type="button"
-                    className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-full hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-full hover:bg-slate-50 active:bg-slate-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {reply}
                   </button>

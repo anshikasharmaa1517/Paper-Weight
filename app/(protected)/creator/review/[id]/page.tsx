@@ -157,7 +157,35 @@ export default function ReviewPage() {
   };
 
   const sendQuickReply = async (message: string) => {
-    await sendMessage(message);
+    if (!message.trim() || !conversation || sendingMessage) {
+      console.warn("Cannot send message:", { message, conversation, sendingMessage });
+      return;
+    }
+    
+    setSendingMessage(true);
+    try {
+      const response = await fetch("/api/conversations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conversation_id: conversation.id,
+          message: message.trim(),
+          message_type: "text",
+        }),
+      });
+
+      if (response.ok) {
+        const { message: newMessage } = await response.json();
+        setMessages((prev) => [...prev, newMessage]);
+        setNewMessage("");
+      } else {
+        console.error("Failed to send message:", response.status);
+      }
+    } catch (error) {
+      console.error("Error sending quick reply:", error);
+    } finally {
+      setSendingMessage(false);
+    }
   };
 
   const saveRatingAndStatus = async () => {
@@ -455,14 +483,14 @@ export default function ReviewPage() {
                 ].map((reply) => (
                   <button
                     key={reply}
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      sendQuickReply(reply);
+                      await sendQuickReply(reply);
                     }}
                     disabled={sendingMessage}
                     type="button"
-                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 active:bg-zinc-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {reply}
                   </button>
