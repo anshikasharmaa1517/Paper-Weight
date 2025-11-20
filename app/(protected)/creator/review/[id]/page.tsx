@@ -111,13 +111,20 @@ export default function ReviewPage() {
 
     async function loadConversation() {
       try {
+        console.log("Loading conversation for resumeId:", resumeId);
         const response = await fetch(
           `/api/conversations?resume_id=${resumeId}`
         );
+        console.log("Conversation API response status:", response.status);
+        
         if (response.ok) {
-          const { conversation, messages } = await response.json();
-          setConversation(conversation);
-          setMessages(messages || []);
+          const data = await response.json();
+          console.log("Conversation data received:", data);
+          setConversation(data.conversation);
+          setMessages(data.messages || []);
+        } else {
+          const errorText = await response.text();
+          console.error("Conversation API error:", response.status, errorText);
         }
       } catch (error) {
         console.error("Error loading conversation:", error);
@@ -157,13 +164,24 @@ export default function ReviewPage() {
   };
 
   const sendQuickReply = async (message: string) => {
-    if (!message.trim() || !conversation || sendingMessage) {
-      console.warn("Cannot send message:", { message, conversation, sendingMessage });
+    if (!message.trim()) {
+      console.warn("Message is empty");
+      return;
+    }
+    
+    if (!conversation) {
+      console.warn("Conversation not loaded yet. Waiting for conversation to load...");
+      return;
+    }
+    
+    if (sendingMessage) {
+      console.warn("Already sending a message");
       return;
     }
     
     setSendingMessage(true);
     try {
+      console.log("Sending quick reply:", { message, conversation_id: conversation.id });
       const response = await fetch("/api/conversations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -176,10 +194,12 @@ export default function ReviewPage() {
 
       if (response.ok) {
         const { message: newMessage } = await response.json();
+        console.log("Message sent successfully:", newMessage);
         setMessages((prev) => [...prev, newMessage]);
         setNewMessage("");
       } else {
-        console.error("Failed to send message:", response.status);
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Failed to send message:", response.status, errorData);
       }
     } catch (error) {
       console.error("Error sending quick reply:", error);
@@ -488,7 +508,8 @@ export default function ReviewPage() {
                       e.stopPropagation();
                       await sendQuickReply(reply);
                     }}
-                    disabled={sendingMessage}
+                    disabled={sendingMessage || !conversation}
+                    title={!conversation ? "Conversation is loading..." : ""}
                     type="button"
                     className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 active:bg-zinc-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
