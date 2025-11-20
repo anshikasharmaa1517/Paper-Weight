@@ -212,11 +212,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
 
-    // Special handling for /reviewers route - redirect authenticated users to their dashboard
-    if (pathname === "/reviewers" && session && session.isAuthenticated) {
-      const redirectPath = getDefaultRedirectPath(session.role);
-      return NextResponse.redirect(new URL(redirectPath, request.url));
-    }
+    // Allow authenticated users to access /reviewers route
+    // (removed the redirect that was preventing access)
 
     // Require authentication for protected routes
     if (!session || !session.isAuthenticated) {
