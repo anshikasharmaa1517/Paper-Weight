@@ -26,13 +26,18 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     const supabase = getBrowserSupabaseClient();
-    const encodedNext = encodeURIComponent(nextPath);
+    
+    // Store the next path in localStorage so we can retrieve it after magic link click
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth_redirect_next", nextPath);
+    }
+    
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         emailRedirectTo:
           typeof window !== "undefined"
-            ? `${window.location.origin}/auth/callback?next=${encodedNext}`
+            ? `${window.location.origin}/auth-callback`
             : undefined,
       },
     });
@@ -52,12 +57,16 @@ export default function LoginPage() {
     const supabase = getBrowserSupabaseClient();
     setLoading(true);
     if (isSignup) {
-      const encodedNext = encodeURIComponent(nextPath);
+      // Store the next path in localStorage for post-signup redirect
+      if (typeof window !== "undefined") {
+        localStorage.setItem("auth_redirect_next", nextPath);
+      }
+      
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodedNext}`,
+          emailRedirectTo: `${window.location.origin}/auth-callback`,
         },
       });
       if (error) setError(error.message);

@@ -5,7 +5,8 @@ import { cookies } from "next/headers";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") || "/dashboard";
+  // Try to get next from URL params first, then fall back to /dashboard
+  let next = searchParams.get("next") || "/dashboard";
 
   if (!code) {
     // If next is /creator, redirect to reviewer-login instead of regular login
