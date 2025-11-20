@@ -599,9 +599,14 @@ export default function CreatorDashboard() {
                 ].map((reply) => (
                   <button
                     key={reply}
-                    onClick={() => sendQuickReply(showConversationModal, reply)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      sendQuickReply(showConversationModal, reply);
+                    }}
                     disabled={sendingMessage === showConversationModal}
-                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors disabled:opacity-50"
+                    type="button"
+                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {reply}
                   </button>
