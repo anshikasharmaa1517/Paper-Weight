@@ -137,10 +137,24 @@ export default function ReviewPage() {
   }, [resumeId, router]);
 
   const sendMessage = async (message: string) => {
-    if (!message.trim() || !conversation || sendingMessage) return;
+    if (!message.trim()) {
+      console.warn("Message is empty");
+      return;
+    }
+    
+    if (!conversation) {
+      console.warn("Conversation not loaded yet");
+      return;
+    }
+    
+    if (sendingMessage) {
+      console.warn("Already sending a message");
+      return;
+    }
 
     setSendingMessage(true);
     try {
+      console.log("Sending message:", { message, conversation_id: conversation.id });
       const response = await fetch("/api/conversations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -153,8 +167,12 @@ export default function ReviewPage() {
 
       if (response.ok) {
         const { message: newMessage } = await response.json();
+        console.log("Message sent successfully:", newMessage);
         setMessages((prev) => [...prev, newMessage]);
         setNewMessage("");
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Failed to send message:", response.status, errorData);
       }
     } catch (error) {
       console.error("Error sending message:", error);
@@ -525,10 +543,11 @@ export default function ReviewPage() {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message..."
-                className="flex-1 px-4 py-3 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder={!conversation ? "Loading conversation..." : "Type your message..."}
+                disabled={!conversation}
+                className="flex-1 px-4 py-3 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-zinc-50 disabled:cursor-not-allowed"
                 onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
+                  if (e.key === "Enter" && !e.shiftKey && conversation) {
                     e.preventDefault();
                     sendMessage(newMessage);
                   }
@@ -536,7 +555,8 @@ export default function ReviewPage() {
               />
               <button
                 onClick={() => sendMessage(newMessage)}
-                disabled={!newMessage.trim() || sendingMessage}
+                disabled={!newMessage.trim() || sendingMessage || !conversation}
+                title={!conversation ? "Conversation is loading..." : ""}
                 className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {sendingMessage ? "..." : "Send"}
