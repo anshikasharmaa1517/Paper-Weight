@@ -455,9 +455,14 @@ export default function ReviewPage() {
                 ].map((reply) => (
                   <button
                     key={reply}
-                    onClick={() => sendQuickReply(reply)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      sendQuickReply(reply);
+                    }}
                     disabled={sendingMessage}
-                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors disabled:opacity-50"
+                    type="button"
+                    className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {reply}
                   </button>
