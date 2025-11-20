@@ -167,8 +167,12 @@ export default function LoginPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={sendMagicLink}
-                      className="rounded-lg border border-zinc-300 text-zinc-700 px-5 py-3 cursor-pointer transition-colors hover:bg-zinc-50 active:bg-zinc-100"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        sendMagicLink(e as any);
+                      }}
+                      disabled={!isValidEmail(email)}
+                      className="rounded-lg border border-zinc-300 text-zinc-700 px-5 py-3 cursor-pointer transition-colors hover:bg-zinc-50 active:bg-zinc-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Send magic link
                     </button>

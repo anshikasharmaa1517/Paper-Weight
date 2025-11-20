@@ -97,6 +97,21 @@ async function determineUserRole(
     return profile.role as UserRole;
   }
 
+  // If profile doesn't exist, create one with default role "user"
+  if (!profile) {
+    try {
+      await supabase
+        .from("profiles")
+        .insert({
+          id: userId,
+          role: "user",
+          onboarded: false,
+        });
+    } catch (error) {
+      console.error("Error creating profile:", error);
+    }
+  }
+
   return "user";
 }
 
