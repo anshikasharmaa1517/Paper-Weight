@@ -219,20 +219,20 @@ export function OnboardingModal() {
   // Ensure the backdrop appears immediately on first paint to avoid exposing
   // the background before the client fetch completes.
   if (loading) {
-    return <div className="fixed inset-0 z-50 bg-white/30 backdrop-blur-md" />;
+    return <div className="fixed inset-0 z-50 bg-white/30 dark:bg-black/30 backdrop-blur-md" />;
   }
   if (!open) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md transition-all duration-300 ease-out ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-white/30 dark:bg-black/30 backdrop-blur-md transition-all duration-300 ease-out ${
         closing ? "opacity-0" : visible ? "opacity-100" : "opacity-0"
       }`}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className={`w-[90%] max-w-md rounded-2xl bg-white shadow-2xl p-6 transition-all duration-300 ease-out ${
+        className={`w-[90%] max-w-md rounded-2xl bg-white dark:bg-zinc-800 shadow-2xl p-6 transition-all duration-300 ease-out ${
           closing
             ? "translate-y-4 scale-95 opacity-0"
             : visible
@@ -240,8 +240,8 @@ export function OnboardingModal() {
             : "translate-y-1 scale-95 opacity-0"
         }`}
       >
-        <div className="mx-auto mb-4 h-1 w-16 rounded-full bg-zinc-200" />
-        <h2 className="text-xl font-semibold text-center">
+        <div className="mx-auto mb-4 h-1 w-16 rounded-full bg-zinc-200 dark:bg-zinc-600" />
+        <h2 className="text-xl font-semibold text-center text-zinc-900 dark:text-white">
           Set up your experience
         </h2>
 
