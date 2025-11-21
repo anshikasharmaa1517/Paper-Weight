@@ -257,7 +257,7 @@ export function OnboardingModal() {
                     key={label}
                     onClick={() => chooseEmployment(label)}
                     disabled={saving}
-                    className="w-full rounded-xl border border-zinc-300 py-3 text-sm hover:bg-zinc-50 disabled:opacity-50 cursor-pointer"
+                    className="w-full rounded-xl border border-zinc-300 py-3 text-sm text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-zinc-700 dark:border-zinc-600 disabled:opacity-50 cursor-pointer"
                   >
                     {label === "Student" ? "No, I'm a student" : label}
                   </button>
