@@ -247,7 +247,7 @@ export function OnboardingModal() {
 
         {step === 1 && (
           <>
-            <p className="text-center text-sm text-zinc-600 mt-2">
+            <p className="text-center text-sm text-zinc-600 dark:text-zinc-300 mt-2">
               Are you employed?
             </p>
             <div className="mt-6 space-y-3">
@@ -278,7 +278,7 @@ export function OnboardingModal() {
             {saveError && <p className="text-sm text-red-600">{saveError}</p>}
             {employment === "Student" && (
               <>
-                <p className="text-sm text-zinc-600">
+                <p className="text-sm text-zinc-600 dark:text-zinc-300">
                   Tell us about your studies
                 </p>
                 <div className="relative">
@@ -288,7 +288,7 @@ export function OnboardingModal() {
                     onBlur={() => setTimeout(() => setCollegeResults([]), 100)}
                     placeholder="Current university or college *"
                     required
-                    className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                    className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                   />
                   {collegeResults.length > 0 && (
                     <div className="absolute left-0 right-0 mt-1 max-h-56 overflow-auto rounded-xl border border-zinc-200 bg-white shadow-xl z-10">
@@ -313,7 +313,7 @@ export function OnboardingModal() {
                   onChange={(e) => setStudentDegree(e.target.value)}
                   placeholder="Current degree/program *"
                   required
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
                 <input
                   value={studentGradYear as any}
@@ -325,19 +325,19 @@ export function OnboardingModal() {
                   placeholder="Expected graduation year *"
                   inputMode="numeric"
                   required
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
               </>
             )}
 
             {employment === "Yes" && (
               <>
-                <p className="text-sm text-zinc-600">Your current role</p>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300">Your current role</p>
                 <input
                   value={currentRole}
                   onChange={(e) => setCurrentRole(e.target.value)}
                   placeholder="Current role/title"
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
                 <input
                   value={yearsExperience as any}
@@ -348,19 +348,19 @@ export function OnboardingModal() {
                   }
                   placeholder="Years of experience"
                   inputMode="numeric"
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
                 <input
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
                   placeholder="Industry (e.g., Software, Finance)"
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
                 <input
                   value={lookingFor}
                   onChange={(e) => setLookingFor(e.target.value)}
                   placeholder="What are you looking for? (e.g., FAANG reviewer)"
-                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                 />
               </>
             )}
@@ -373,7 +373,7 @@ export function OnboardingModal() {
                 onBlur={() => setTimeout(() => setJobTitleResults([]), 100)}
                 placeholder="Desired job title *"
                 required
-                className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
               />
               {jobTitleResults.length > 0 && (
                 <div className="absolute left-0 right-0 mt-1 max-h-56 overflow-auto rounded-xl border border-zinc-200 bg-white shadow-xl z-10">
@@ -405,7 +405,7 @@ export function OnboardingModal() {
                 onChange={(e) => setDesiredLocation(e.target.value)}
                 onBlur={() => setTimeout(() => setLocationResults([]), 100)}
                 placeholder="Desired location"
-                className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm"
+                className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm placeholder:text-zinc-400 dark:placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
               />
               {locationResults.length > 0 && (
                 <div className="absolute left-0 right-0 mt-1 max-h-56 overflow-auto rounded-xl border border-zinc-200 bg-white shadow-xl z-10">
@@ -430,7 +430,7 @@ export function OnboardingModal() {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="rounded-xl border px-4 py-2 text-sm cursor-pointer"
+                className="rounded-xl border border-zinc-300 px-4 py-2 text-sm cursor-pointer text-zinc-900 dark:text-white dark:border-zinc-600 dark:hover:bg-zinc-800 hover:bg-zinc-100"
               >
                 Back
               </button>
