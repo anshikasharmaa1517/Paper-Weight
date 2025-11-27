@@ -307,18 +307,4 @@ The platform supports three user roles:
 - **Advanced Analytics**: Predictive analytics and insights
 - **White-label Solution**: Customizable platform for organizations
 
-## Support
 
-### Documentation
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Supabase Documentation](https://supabase.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-
-### Getting Help
-
-- **Issues**: [GitHub Issues](https://github.com/anshikasharmaa1517/Paper-Weight/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/anshikasharmaa1517/Paper-Weight/discussions)
-- **Email**: support@paperweight.app
-
----
