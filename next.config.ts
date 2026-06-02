@@ -1,19 +1,23 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 import { getSecurityHeaders } from "./lib/env-config";
+
+const projectRoot = path.resolve(process.cwd());
 
 const nextConfig: NextConfig = {
   transpilePackages: ["react-pdf", "pdfjs-dist"],
-  experimental: {
-    // Removed turbopack config for production compatibility
+
+  // Pin workspace root (avoids picking up a parent lockfile on local machines)
+  outputFileTracingRoot: projectRoot,
+  turbopack: {
+    root: projectRoot,
   },
 
-  // Security headers
   async headers() {
     const securityHeaders = getSecurityHeaders();
-    
+
     return [
       {
-        // Apply security headers to all routes
         source: "/(.*)",
         headers: Object.entries(securityHeaders).map(([key, value]) => ({
           key,
@@ -23,7 +27,6 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Redirect HTTP to HTTPS in production
   async redirects() {
     if (process.env.NODE_ENV === "production") {
       return [
@@ -44,46 +47,18 @@ const nextConfig: NextConfig = {
     return [];
   },
 
-  // Disable X-Powered-By header
   poweredByHeader: false,
 
-  // Disable ESLint during builds for production deployment
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
-  // Disable TypeScript checking during builds for faster deployment
   typescript: {
     ignoreBuildErrors: true,
   },
 
-  // Compress responses
   compress: true,
 
-  // SWC minification is enabled by default in Next.js 15
-
-  // Image optimization security
   images: {
-    domains: [], // Explicitly define allowed image domains
+    remotePatterns: [],
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  },
-
-  // Webpack configuration for security
-  webpack: (config, { dev, isServer }) => {
-    // Production optimizations
-    if (!dev) {
-      config.optimization = {
-        ...config.optimization,
-        // Remove comments and debug info
-        minimize: true,
-        // Tree shaking
-        usedExports: true,
-        sideEffects: false,
-      };
-    }
-
-    return config;
   },
 };
 

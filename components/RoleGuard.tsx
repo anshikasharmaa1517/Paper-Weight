@@ -39,11 +39,13 @@ export function RoleGuard({
         }
 
         // Get user profile with role
-        const { data: profile, error: profileError } = await supabase
+        const { data: initialProfile, error: profileError } = await supabase
           .from("profiles")
           .select("*")
           .eq("id", user.id)
           .single();
+
+        let profile = initialProfile;
 
         if (profileError || !profile) {
           console.log(
@@ -242,11 +244,13 @@ export function useSession() {
         }
 
         // Get user profile with role
-        const { data: profile, error: profileError } = await supabase
+        const { data: initialProfile, error: profileError } = await supabase
           .from("profiles")
           .select("*")
           .eq("id", user.id)
           .single();
+
+        let profile = initialProfile;
 
         // If no profile exists, create a default one for new users
         if (profileError || !profile) {
