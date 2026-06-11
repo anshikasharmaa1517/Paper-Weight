@@ -29,11 +29,6 @@ PaperWeight is a comprehensive resume review platform built with modern web tech
   <img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/74b999c1-857d-4900-ac23-e3e3c9ce54af" />
 
 
-### For Administrators
-
-- **User Management**: Comprehensive admin dashboard
-- **Analytics**: Platform usage and performance metrics
-- **Content Moderation**: Review and manage user-generated content
 
 ## 🛠 Tech Stack
 
@@ -280,31 +275,5 @@ The platform supports three user roles:
 - [ ] XSS vulnerability scanning
 - [ ] File upload security
 - [ ] Rate limiting effectiveness
-
-## Future Improvements
-
-### Short-term (Next 3 months)
-
-- **Email Notifications**: Automated email alerts for reviews and messages
-- **Mobile App**: React Native mobile application
-- **Advanced Search**: Filter reviewers by expertise, location, availability
-- **Review Templates**: Pre-built feedback templates for common issues
-- **Analytics Dashboard**: Detailed usage and performance metrics
-
-### Medium-term (3-6 months)
-
-- **Video Reviews**: Video feedback from reviewers
-- **AI-Powered Suggestions**: AI-generated resume improvement suggestions
-- **Integration APIs**: LinkedIn, Indeed, and other job platform integrations
-- **Payment System**: Premium features and reviewer compensation
-- **Advanced Matching**: ML-based reviewer-user matching
-
-### Long-term (6+ months)
-
-- **Enterprise Features**: Company-wide resume review programs
-- **API Platform**: Public API for third-party integrations
-- **Multi-language Support**: Internationalization and localization
-- **Advanced Analytics**: Predictive analytics and insights
-- **White-label Solution**: Customizable platform for organizations
 
 
